@@ -1,4 +1,4 @@
-* {
+/* * {
     color: #ececec;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -11,4 +11,23 @@ body {
 .app {
     background-color: #212121;
     display: flex;
+} */
+
+
+* {
+    color: #ececec;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Horizontal scroll ko rokne ke liye */
+}
+
+.app {
+    background-color: #212121;
+    display: flex;
+    position: relative;
+    width: 100vw;
 }
