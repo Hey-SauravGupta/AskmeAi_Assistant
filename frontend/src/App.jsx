@@ -39,7 +39,7 @@ import './App.css';
 import Sidebar from "./Sidebar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
 import { MyContext } from "./MyContext.jsx";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v1 as uuidv1 } from "uuid";
 
 function App() {
@@ -49,8 +49,6 @@ function App() {
   const [prevChats, setPrevChats] = useState([]); //stores all chats of curr threads
   const [newChat, setNewChat] = useState(true);
   const [allThreads, setAllThreads] = useState([]);
-
-  // Responsive state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -70,6 +68,9 @@ function App() {
 
   return (
     <div className='app'>
+      {/* --- START: YEH OVERLAY ADD KAREIN --- */}
+      {isSidebarOpen && <div className="overlay" onClick={toggleSidebar}></div>}
+      {/* --- END: YEH OVERLAY ADD KAREIN --- */}
       <MyContext.Provider value={providerValues}>
         <Sidebar />
         <ChatWindow />

@@ -109,6 +109,7 @@ import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 
 function Sidebar() {
+    // Make sure 'isSidebarOpen' and 'toggleSidebar' are here
     const { allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats, isSidebarOpen, toggleSidebar } = useContext(MyContext);
 
     const getAllThreads = async () => {
@@ -133,23 +134,21 @@ function Sidebar() {
         setReply(null);
         setCurrThreadId(uuidv1());
         setPrevChats([]);
-        if (window.innerWidth < 768) {
-            toggleSidebar(); // Close sidebar on mobile after creating new chat
+        if (window.innerWidth <= 768) {
+            toggleSidebar(); // Mobile par sidebar band karega
         }
     }
 
     const changeThread = async (newThreadId) => {
         setCurrThreadId(newThreadId);
-
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/thread/${newThreadId}`);
             const res = await response.json();
-            console.log(res);
             setPrevChats(res);
             setNewChat(false);
             setReply(null);
-            if (window.innerWidth < 768) {
-                toggleSidebar(); // Close sidebar on mobile after selecting a chat
+            if (window.innerWidth <= 768) {
+                toggleSidebar(); // Mobile par sidebar band karega
             }
         } catch (err) {
             console.log(err);
@@ -159,20 +158,17 @@ function Sidebar() {
     const deleteThread = async (threadId) => {
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/thread/${threadId}`, { method: "DELETE" });
-            const res = await response.json();
-            console.log(res);
-
+            await response.json();
             setAllThreads(prev => prev.filter(thread => thread.threadId !== threadId));
-
             if (threadId === currThreadId) {
                 createNewChat();
             }
-
         } catch (err) {
             console.log(err);
         }
     }
 
+    // YEH LINE SABSE ZAROORI HAI
     return (
         <section className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <button onClick={createNewChat}>
@@ -185,13 +181,13 @@ function Sidebar() {
                 {
                     allThreads?.map((thread, idx) => (
                         <li key={idx}
-                            onClick={(e) => changeThread(thread.threadId)}
-                            className={thread.threadId === currThreadId ? "highlighted" : " "}
+                            onClick={() => changeThread(thread.threadId)}
+                            className={thread.threadId === currThreadId ? "highlighted" : ""}
                         >
                             {thread.title}
                             <i className="fa-solid fa-trash"
                                 onClick={(e) => {
-                                    e.stopPropagation(); //stop event bubbling
+                                    e.stopPropagation();
                                     deleteThread(thread.threadId);
                                 }}
                             ></i>

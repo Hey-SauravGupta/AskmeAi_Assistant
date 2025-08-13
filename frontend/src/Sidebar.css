@@ -93,7 +93,7 @@ button:hover{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-shrink: 0; /* Isko add karein taki sidebar na sikude */
+    flex-shrink: 0; /* Prevents sidebar from shrinking on desktop */
 }
 
 button {
@@ -127,25 +127,24 @@ button:hover {
     margin: 10px;
     padding: 10px;
     height: 100%;
-    overflow-y: auto; /* Lambi list ke liye scroll add karein */
+    overflow-y: auto;
 }
 
 .history li {
     list-style-type: none;
     cursor: pointer;
-    padding: 10px 15px; /* Thoda padding badhayein */
+    padding: 10px 15px;
     margin-bottom: 0.3rem;
     font-size: 14px;
-    border: solid 10px transparent;
     position: relative;
-    white-space: nowrap; /* Text ko ek line mein rakhein */
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Lambe text ko ... se dikhayein */
+    text-overflow: ellipsis;
 }
 
 .history li:hover {
     background-color: rgba(180, 180, 180, 0.05);
-    border-radius: 5px; /* Corner ko thoda gol karein */
+    border-radius: 5px;
 }
 
 .sign {
@@ -159,7 +158,7 @@ button:hover {
 .fa-trash {
     opacity: 0;
     position: absolute;
-    right: 15px; /* Thoda space de */
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -181,16 +180,18 @@ button:hover {
 /* --- START: RESPONSIVE CSS --- */
 @media (max-width: 768px) {
     .sidebar {
-        position: fixed;
+        position: fixed; /* YEH SABSE ZAROORI HAI */
         left: 0;
         top: 0;
         height: 100%;
-        z-index: 100;
-        transform: translateX(-100%);
+        z-index: 1000;
+        transform: translateX(-100%); /* Isse sidebar hide hoga */
         transition: transform 0.3s ease-in-out;
         width: 280px;
+        border-right: 1px solid #333;
     }
 
+    /* Jab 'open' class lagegi, tab sidebar dikhega */
     .sidebar.open {
         transform: translateX(0);
     }
